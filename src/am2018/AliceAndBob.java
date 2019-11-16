@@ -1,3 +1,5 @@
+// cd /Users/iuri/eclipse-workspace/java-exercices ; /Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/bin/java -Dfile.encoding=UTF-8 -cp /Users/iuri/eclipse-workspace/java-exercices/bin am2018.AliceAndBob 
+
 package am2018;
 
 public class AliceAndBob {
@@ -9,53 +11,72 @@ public class AliceAndBob {
 		int K=3;
 		int L=2;
 		int result = exercice.solution(A, K, L);
-		System.out.println(result);
+		System.out.println("RESPONSE: " + result);
 	}
 	
 	public int solution(int[]A, int K, int L) {
 		
-		int [] appleTrees = A;
-		
-		int aliceConsec = K;
-		int bobConsec = L;
-		
 		int maxNumberOfAppleCollected = -1;
-		int treesEnd = (appleTrees.length)-aliceConsec+1;
-		
-		for (int i = 0; i < treesEnd; i++) {
+		int i=0;
+
+		// Best sum possible for K
+		System.out.println("#  Best sum possible for K");
+		int maxSumForK = -1;
+		int selectedIndexForK = -1;
+		for(int k=0; k<(A.length-K+1); k++){
+			System.out.print(A[k]+" - ");
 			
-			System.out.print("Alice: ");
-			int aliceIni = i;
-			int aliceEnd = i+aliceConsec;
-			for (int j = aliceIni; j < aliceEnd; j++) {
-				System.out.print(appleTrees[j]+",");			
+			int sum = 0;
+			for(i=k; i<(k+K); i++){
+				sum += A[i];
+				System.out.print(A[i]+" ");
 			}
-			System.out.println();
+			System.out.println("("+sum+")");			
 			
-			for (int j = 0; j < treesEnd; j++) {
-				
-				// Back to alice
-				if( (j+bobConsec)<(aliceIni)) {
-					System.out.print("\tBob (back): ");
-					for (int j2 = j; j2 < j+bobConsec+1; j2++) {
-						System.out.print(appleTrees[j2]+",");			
-					}
-					System.out.println();
-				}
-				
-				// Front to alice
-				if( (j+aliceEnd+1)<(treesEnd-bobConsec) ) {
-					System.out.print("\tBob (front): ");
-					for (int j2 = aliceEnd+1; j2 < (j+bobConsec+1); j2++) {
-						System.out.print(appleTrees[j2]+",");
-					}
-					System.out.println();
-				}
+			if(sum>maxSumForK){
+				maxSumForK = sum;
+				selectedIndexForK = k;
 			}
-			
-			
 		}
-		
+
+		System.out.println("maxSumForK: "+maxSumForK);
+		System.out.println("selectedIndexForK: "+selectedIndexForK);
+		System.out.println();
+
+		// Best sum possible for L
+		System.out.println("#  Best sum possible for L");
+		int maxSumForL = 0;
+		int selectedIndexForL = -1;
+
+		for(int l=0; l<(A.length-L+1); l++){
+			System.out.print(A[l]+" - ");
+			int sum = 0;
+
+			if( (l<selectedIndexForK) || (l>=(selectedIndexForK+K))){
+				for(i=l; i<(l+L); i++){
+
+					// Filter by K
+					sum += A[i];
+					System.out.print(A[i]+" ");				
+					
+				}
+				System.out.println("("+sum+")");
+			} else {
+				System.out.println("(not allowed)");
+			}
+
+			if(sum>maxSumForL){
+				maxSumForL = sum;
+				selectedIndexForL = l;
+			}
+		}
+
+		System.out.println("maxSumForL: "+maxSumForL);
+		System.out.println("selectedIndexForL: "+selectedIndexForL);
+		System.out.println();
+
+		// Calc result
+		maxNumberOfAppleCollected = maxSumForK+maxSumForL;
 		return maxNumberOfAppleCollected;
 	}
 }
