@@ -21,10 +21,10 @@ public class Test01Elevator {
 	public static int getLucky(int n) {
 		
 		int luckCountInt = 1;
-		String floorStr = "";
+		// String floorStr = "";
 		
 		for(int floor=1; floor<=n; floor++) {
-			floorStr = Integer.toString(floor);
+			// floorStr = Integer.toString(floor);
 			
 			//if(luckCountStr.contains("4") || luckCountStr.contains("13")) {
 				
