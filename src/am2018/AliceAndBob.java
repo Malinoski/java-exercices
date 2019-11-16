@@ -52,15 +52,15 @@ public class AliceAndBob {
 			System.out.print(A[l]+" - ");
 			int sum = 0;
 
+			// Filter ( L cant use K range )
 			if( (l<selectedIndexForK) || (l>=(selectedIndexForK+K))){
 				for(i=l; i<(l+L); i++){
 
-					// Filter by K
 					sum += A[i];
 					System.out.print(A[i]+" ");				
 					
 				}
-				System.out.println("("+sum+")");
+				System.out.println("(sum: "+sum+")");
 			} else {
 				System.out.println("(not allowed)");
 			}
